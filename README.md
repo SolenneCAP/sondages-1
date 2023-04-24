@@ -64,3 +64,10 @@ utilisés [/HELP.md](ici)).
 * [Spring REST Docs](https://docs.spring.io/spring-restdocs/docs/current/reference/html5/)
 * [Spring Web](https://docs.spring.io/spring-boot/docs/3.0.5/reference/htmlsingle/#web)
 * [Spring Data JPA](https://docs.spring.io/spring-boot/docs/3.0.5/reference/htmlsingle/#data.sql.jpa-and-spring-data)
+
+### Tests unitaires
+
+> **ATTENTION** : Pour exécuter les tests unitaires, mettez-vous sur une 
+> nouvelle base de données en modifiant votre fichier `application.
+> properties` car en cas de mauvais fonctionnement des tests, des données seront ajoutées dans votre 
+base de production.
