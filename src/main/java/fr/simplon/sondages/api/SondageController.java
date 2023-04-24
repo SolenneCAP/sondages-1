@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Contrôleur CRUD pour les sondages.
+ */
 @RestController
 @RequestMapping("/api")
 public class SondageController
@@ -24,7 +27,8 @@ public class SondageController
     @GetMapping(path = "/sondages")
     public List<Sondage> sondages()
     {
-        return mRepository.findAll();
+        List<Sondage> all = mRepository.findAll();
+        return all;
     }
 
     @GetMapping(path = "/sondages/{id}")
@@ -36,7 +40,7 @@ public class SondageController
     @PostMapping(path = "/sondages")
     public Sondage createSondage(@RequestBody Sondage sondage)
     {
-        mRepository.save(sondage);
+        sondage = mRepository.save(sondage);
         return sondage;
     }
 

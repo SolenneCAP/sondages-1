@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="single-sondage (sondage)" class="box-sondage">
+    <img th:src="@{${sondage.closedAt < #temporals.createNow()} ? '/closed.png' : '/open.png'}"
+         th:class="${sondage.closedAt < #temporals.createNow() ? 'closed' : 'open'}">
+
+    <div class="sondage-text-content">
+        <div class="sondage-desc">
+            <a tooltip="Voir le détail des votes" th:if="${sondage.closedAt <= #temporals.createNow()}" th:href="@{/votes/{id}(id=${sondage.id})}"
+               th:text="${sondage.description}">Sondage</a>
+            <span th:if="${sondage.closedAt > #temporals.createNow()}" th:text="${sondage.description}">Sondage</span>
+        </div>
+
+        <div th:if="${sondage.closedAt <= #temporals.createNow()}" class="sondage-votes">
+            <span class="vote" th:classappend="${sondage.countTrue() > sondage.countFalse() ? 'vote-pour' : ''}"
+                  th:text="'Pour : '+${sondage.countTrue()}">Pour : 1029</span>
+            <span class="vote" th:classappend="${sondage.countTrue() < sondage.countFalse() ? 'vote-contre' : ''}"
+                  th:text="'Contre : '+${sondage.countFalse()}">Contre : 455</span>
+        </div>
+
+        <div th:if="${sondage.closedAt > #temporals.createNow()}" class="sondage-votes">
+            <form method="post" th:action="@{/votes/{id}(id=${sondage.id})}">
+                <div>Votez !</div>
+                <input type="text" name="user" required placeholder="Votre nom">
+                <button class="vote vote-pour" name="value" value="true" th:text="Pour" type="submit">Pour</button>
+                <button class="vote vote-contre" name="value" value="false" th:text="Contre" type="submit">Contre</button>
+            </form>
+        </div>
+
+        <div class="sondage-dates">
+            Créé par <span th:text="${sondage.createdBy}">Michel Le Sondeur</span>
+            le <span th:text="${#temporals.format(sondage.createdAt, 'dd/MM/yyyy à HH:mm:ss')}">10/10/2023</span>,
+            fermeture le <span
+                th:text="${#temporals.format(sondage.closedAt, 'dd/MM/yyyy à HH:mm:ss')}">11/10/2023</span>
+        </div>
+        <div>
+            <div class="sondage-question" th:text="${sondage.question}"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

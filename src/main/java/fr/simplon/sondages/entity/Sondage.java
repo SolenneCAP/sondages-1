@@ -6,9 +6,11 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Fetch;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Entity
 public class Sondage
@@ -36,6 +38,11 @@ public class Sondage
     @NotNull
     @NotBlank
     private String createdBy;
+
+    @OneToMany(mappedBy = "sondage")
+    @OrderBy("votedAt DESC")
+    private Collection<Vote> votes;
+
 
     public Sondage()
     {
@@ -118,5 +125,23 @@ public class Sondage
     public void setCreatedBy(String pCreatedBy)
     {
         createdBy = pCreatedBy;
+    }
+
+    public Collection<Vote> getVotes()
+    {
+        return votes;
+    }
+
+    public void setVotes(Collection<Vote> pVotes)
+    {
+        votes = pVotes;
+    }
+
+    public long countTrue(){
+        return votes.stream().filter(v -> v.getValue()).count();
+    }
+
+    public long countFalse(){
+        return votes.stream().filter(v -> !v.getValue()).count();
     }
 }

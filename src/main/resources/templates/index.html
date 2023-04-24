@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sondages</title>
+    <link rel="stylesheet" href="../static/styles.css" th:href="@{/styles.css}"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
+</head>
+<body>
+<h1>Votez pour vos propositions préférées</h1>
+
+<div id="header">
+    <button id="btn-refresh-pollings" class="btn btn-ok">Rafraîchir</button>&nbsp;
+    <th:block th:replace="~{fragment-pagination :: pagination(page=${page},pageCount=${pageCount})}"></th:block>
+</div>
+
+<div th:replace="~{fragment-form :: new-sondage (newSondage=${newSondage})}"></div>
+
+<div id="sondages" th:fragment="all-sondages">
+    <th:block th:each="sondage : ${sondages}">
+        <div th:replace="~{fragment-sondage :: single-sondage(sondage=${sondage})}"></div>
+    </th:block>
+</div>
+
+<script src="../static/sondages.js" th:src="@{/sondages.js}" type="module"></script>
+</body>
+</html>

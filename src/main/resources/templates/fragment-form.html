@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div id="form-new-sondage" th:fragment="new-sondage (newSondage)">
+
+    <h2>Créez votre sondage</h2>
+
+    <form id="form-creation-sondage" action="#" method="post" th:object="${newSondage}">
+        <label for="description">Description :</label>
+        <input id="description" type="text" th:field="*{description}" required placeholder="Ex. : Vacances">
+        <br>
+
+        <label for="question">Question :</label>
+        <input id="question" type="text" th:field="*{question}" required
+               placeholder="Ex. : Voulez-vous plus de vacances ?">
+        <br>
+
+        <label for="createdBy">Votre nom :</label>
+        <input id="createdBy" type="text" th:field="*{createdBy}" required placeholder="Ex. : John">
+        <br>
+
+        <label for="closedAt">Date de clôture :</label>
+        <input id="closedAt" type="datetime-local" required th:field="*{closedAt}">
+        <br>
+
+        <div class="btn-bar">
+            <button id="btn-reset-polling" class="btn" type="reset">Effacer</button>
+            <button id="btn-create-polling" class="btn btn-ok" type="submit">Ajouter</button>&nbsp;
+        </div>
+    </form>
+</div>
+</body>
+</html>
