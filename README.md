@@ -57,7 +57,7 @@ Par défaut l'API est documentée sur l'URL `http://localhost:8080/swagger-ui.ht
 ### Technologies utilisées
 
 L'application est développée avec Spring Boot (voir le détail des packages 
-utilisés [/HELP.md](ici)).
+utilisés [ici](/HELP.md)).
 
 * [Thymeleaf](https://docs.spring.io/spring-boot/docs/3.0.5/reference/htmlsingle/#web.servlet.spring-mvc.template-engines)
 * [Validation](https://docs.spring.io/spring-boot/docs/3.0.5/reference/htmlsingle/#io.validation)
