@@ -5,6 +5,7 @@ import fr.simplon.sondages.entity.Sondage;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,9 +33,9 @@ public class SondageController
     }
 
     @GetMapping(path = "/sondages/{id}")
-    public Sondage getSondageById(@PathVariable Long id)
+    public ResponseEntity<Sondage> getSondageById(@PathVariable Long id)
     {
-        return mRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
+        return ResponseEntity.of(mRepository.findById(id));
     }
 
     @PostMapping(path = "/sondages")
