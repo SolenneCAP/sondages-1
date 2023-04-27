@@ -2,6 +2,7 @@ package fr.simplon.sondages;
 
 import fr.simplon.sondages.api.SondageController;
 import fr.simplon.sondages.entity.Sondage;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,10 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
+import java.net.URI;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -26,9 +29,9 @@ import java.time.temporal.ChronoUnit;
  * <p>
  *     <ul>
  *         <li>GET /sondages ==&gt; {@link SondageController#sondages()}</li>
- *         <li>POST /sondages ==&gt; {@link SondageController#createSondage(Sondage)}</li>
+ *         <li>POST /sondages ==&gt; {@link SondageController#createSondage(Sondage, BindingResult, HttpServletRequest)}</li>
  *         <li>GET /sondages{id} ==&gt; {@link SondageController#getSondageById(Long)}</li>
- *         <li>PUT /sondages{id} ==&gt; {@link SondageController#updateSondage(Long, Sondage)}</li>
+ *         <li>PUT /sondages{id} ==&gt; {@link SondageController#updateSondage(Long, Sondage, BindingResult, HttpServletRequest)}</li>
  *         <li>DELETE /sondages{id} ==&gt; {@link SondageController#deleteSondage(Long)}</li>
  *     </ul>
  * </p>
@@ -117,15 +120,33 @@ class SondagesApplicationTests
     @Test
     public void testCreate()
     {
-        // Requête du service "POST /sondages"
+        // Requête du service "POST /sondages" pour créer l'entité
         ResponseEntity<Sondage> response = restTemplate.postForEntity(URL, sondage, Sondage.class);
 
-        Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
+        // Vérifications
+        Assertions.assertEquals(response.getStatusCode(), HttpStatus.CREATED);
+        URI location = response.getHeaders().getLocation();
         Sondage body = response.getBody();
+        long idOfCreated = Long.parseLong(location.getPath().substring(1+location.getPath().lastIndexOf('/')));
+
+        // Vérification des données reçues dans la réponse HTTP
+        Assertions.assertNotNull(location);
+        Assertions.assertNotNull(body);
         Assertions.assertNotNull(body.getId());
-        Assertions.assertEquals(body.getQuestion(), sondage.getQuestion());
-        Assertions.assertEquals(body.getDescription(), sondage.getDescription());
-        Assertions.assertEquals(body.getClosedAt(), sondage.getClosedAt());
+        Assertions.assertEquals(idOfCreated, body.getId());
+        Assertions.assertEquals(sondage.getQuestion(), body.getQuestion());
+        Assertions.assertEquals(sondage.getDescription(), body.getDescription());
+        Assertions.assertEquals(sondage.getClosedAt(), body.getClosedAt());
+
+        // Re-demande l'objet créé pour vérifier que les données sont identiques
+        response = restTemplate.getForEntity(location, Sondage.class);
+        Sondage created = response.getBody();
+        Assertions.assertNotNull(created);
+        Assertions.assertNotNull(created.getId());
+        Assertions.assertEquals(idOfCreated, body.getId());
+        Assertions.assertEquals(sondage.getQuestion(), created.getQuestion());
+        Assertions.assertEquals(sondage.getDescription(), created.getDescription());
+        Assertions.assertEquals(sondage.getClosedAt(), created.getClosedAt());
     }
 
     /**

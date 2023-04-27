@@ -1,15 +1,14 @@
 package fr.simplon.sondages.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.hibernate.annotations.Fetch;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 
 @Entity
@@ -43,7 +42,6 @@ public class Sondage
     @OrderBy("votedAt DESC")
     private Collection<Vote> votes;
 
-
     public Sondage()
     {
         super();
@@ -59,12 +57,12 @@ public class Sondage
             String pCreatedBy)
     {
         super();
-        id = pId;
-        description = pDescription;
-        question = pQuestion;
-        createdAt = pCreatedAt;
-        closedAt = pClosedAt;
-        createdBy = pCreatedBy;
+        setId(pId);
+        setDescription(pDescription);
+        setQuestion(pQuestion);
+        setCreatedAt(pCreatedAt);
+        setClosedAt(pClosedAt);
+        setCreatedBy(pCreatedBy);
     }
 
     public Long getId()
@@ -105,6 +103,10 @@ public class Sondage
     public void setCreatedAt(LocalDateTime pCreatedAt)
     {
         createdAt = pCreatedAt;
+        if (createdAt != null)
+        {
+            createdAt = createdAt.truncatedTo(ChronoUnit.SECONDS);
+        }
     }
 
     public LocalDateTime getClosedAt()
@@ -115,6 +117,10 @@ public class Sondage
     public void setClosedAt(LocalDateTime pClosedAt)
     {
         closedAt = pClosedAt;
+        if (closedAt != null)
+        {
+            closedAt = closedAt.truncatedTo(ChronoUnit.SECONDS);
+        }
     }
 
     public String getCreatedBy()
@@ -137,11 +143,13 @@ public class Sondage
         votes = pVotes;
     }
 
-    public long countTrue(){
+    public long countTrue()
+    {
         return votes.stream().filter(v -> v.getValue()).count();
     }
 
-    public long countFalse(){
+    public long countFalse()
+    {
         return votes.stream().filter(v -> !v.getValue()).count();
     }
 }
