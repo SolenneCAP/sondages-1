@@ -6,8 +6,10 @@
     <link rel="stylesheet" href="../static/styles.css" th:href="@{/styles.css}"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
 </head>
+<header th:replace="~{fragment-header :: header}">
+    <h1>Votez pour vos propositions préférées</h1>
+</header>
 <body>
-<h1>Votez pour vos propositions préférées</h1>
 
 <div id="header">
     <button id="btn-refresh-pollings" class="btn btn-ok">Rafraîchir</button>&nbsp;

@@ -6,8 +6,10 @@
     <link rel="stylesheet" href="../static/styles.css" th:href="@{/styles.css}"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
 </head>
+<header th:replace="~{fragment-header :: header}">
+    <h1>Votez pour vos propositions préférées</h1>
+</header>
 <body>
-
 <div class="title-bar">
     <button th:onclick="|window.location='@{/}'|" title="Retour">&lt</button>&nbsp;
     <h1>Détail des votes</h1>

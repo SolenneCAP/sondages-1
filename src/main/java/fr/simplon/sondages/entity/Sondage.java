@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Cascade;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
@@ -40,6 +41,7 @@ public class Sondage
 
     @OneToMany(mappedBy = "sondage")
     @OrderBy("votedAt DESC")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Collection<Vote> votes;
 
     public Sondage()
