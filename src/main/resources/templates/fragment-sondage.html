@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <div th:fragment="single-sondage (sondage)" class="box-sondage">
     <img th:src="@{${sondage.closedAt < #temporals.createNow()} ? '/closed.png' : '/open.png'}"

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Sondages</title>
@@ -8,9 +9,11 @@
 </head>
 <header th:replace="~{fragment-header :: header}">
     <h1>Votez pour vos propositions préférées</h1>
+
+
 </header>
 <body>
-
+<a href="/admin/createUser">Créer un nouvel utilisateur</a>
 <div id="header">
     <button id="btn-refresh-pollings" class="btn btn-ok">Rafraîchir</button>&nbsp;
     <th:block th:replace="~{fragment-pagination :: pagination(page=${page},pageCount=${pageCount})}"></th:block>

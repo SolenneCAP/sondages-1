@@ -43,7 +43,7 @@ class SondagesApplicationTests
      * URL du WebService que nous testons (ce peut être l'URL d'un serveur distant ou un serveur local mais dans notre
      * cas il s'agit d'un serveur Spring Boot qui tourne sur notre propre machine, donc local).
      */
-    private final String URL = "http://localhost:8080/api/sondages";
+    private final String URL = "http://localhost:8081/api/sondages";
 
     /**
      * Client REST permettant de faire des appels distants.
