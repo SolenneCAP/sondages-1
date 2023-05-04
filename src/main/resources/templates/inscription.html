@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr"xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer son compte</title>
+</head>
+<body>
+<h1>Créer son compte</h1>
+<form method="post" action="/inscription">
+    <label for="login">Login:</label>
+    <input type="text" id="login" name="login"><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password"><br>
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword"><br>
+    <input type="submit" value="Create User">
+</form>
+
+</body>
+</html>

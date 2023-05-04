@@ -122,4 +122,12 @@ public class WebController
         return openSondages;
     }
 
+    @Controller
+    class LoginController {
+        @GetMapping("/login")
+        String login() {
+            return "login";
+        }
+    }
+
 }

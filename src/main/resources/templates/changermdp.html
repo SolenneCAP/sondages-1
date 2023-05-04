@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Changer de mot de passe</title>
+</head>
+<body>
+<h1>Changer de mot de passe</h1>
+
+
+<form method="put" action="/changermdp">
+    <label for="current-password">Mot de passe actuel:</label>
+    <input type="password" name="current-password" id="current-password">
+    <label for="new-password">Nouveau mot de passe:</label>
+    <input type="password" name="new-password" id="new-password">
+    <label for="confirm-password">Confirmez le nouveau mot de passe:</label>
+    <input type="password" name="confirm-password" id="confirm-password">
+    <button type="submit">Changer le mot de passe</button>
+</form>
+</body>
+</html>

@@ -27,12 +27,18 @@ public class SpringSecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/votes/*").authenticated()
                 .requestMatchers(HttpMethod.POST, "/votes/*").authenticated()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/users").hasRole("USER")
                 .requestMatchers(HttpMethod.PUT, "/**").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/**").authenticated()
                 .requestMatchers("/admin/createUser").hasAuthority("CREATE_USER") // Identique BDD
+                .requestMatchers(HttpMethod.GET,"/login").permitAll()
+                .requestMatchers(HttpMethod.POST,"/changermdp").permitAll()
+                .requestMatchers(HttpMethod.GET,"/changermdp").permitAll()
                 .anyRequest().permitAll()
-                .and().formLogin()
-                .and().build();
+                .and().formLogin().loginPage("/login")
+                .and().passwordManagement((management) -> management
+                        .changePasswordPage("/changermdp"))
+                .build();
     }
 
     @Autowired
